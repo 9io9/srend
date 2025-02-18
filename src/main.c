@@ -15,18 +15,12 @@
 
 static void on_draw(SDL_Renderer* render) {
   SDL_SetRenderDrawColor(render, 255, 255, 255, 255);
-
+  
   SDL_RenderClear(render);
 
   SDL_SetRenderDrawColor(render, 0, 0, 0, 255);
   
-  for (int i = 0; i < 100; ++i) {
-    for (int j = 0; j < 100; ++j) {
-      if (SDL_RenderDrawPoint(render, i, j) == -1) {
-        printf("Draw point failed\n");
-      }
-    }
-  }
+  SDL_RenderDrawLineF(render, 0, 0, 43, 75);
 }
 
 static void update_fps(long frame_time, TTF_Font* font, SDL_Renderer* render) {

@@ -46,7 +46,7 @@ typedef struct RenderBuffer {
 
 static void on_draw(SDL_Renderer* render) {
   SDL_SetRenderDrawColor(render, 255, 255, 255, 255);
-
+  
   SDL_RenderClear(render);
 
   SDL_SetRenderDrawColor(render, 0, 0, 0, 255);

@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdbool.h>
+#include <stdlib.h>
+
+#include "mlib/mlib.h"
 
 #define ESDL 1
 
@@ -13,20 +16,41 @@
 
 #define SPEC2MS(spec) (spec.tv_nsec / 1000000L + spec.tv_sec * 1000L)
 
+typedef SDL_Color(*ColorFunc)(Vertex2D);
+
+typedef struct Vertex3D {
+  double x, y, z;
+}Vertex3D;
+
+typedef struct Vertex2D {
+  double x, y;
+}Vertex2D;
+
+typedef struct Line2D {
+  double y_slide;
+  Vertex2D start;
+  Vertex2D end;
+  ColorFunc color_distr;
+}Line2D;
+
+typedef struct RenderBuffer {
+  int width, height;
+  int buffer_len;
+  double sample_unit_len; // sample unit length for x, y
+  SDL_Color back_color;
+  SDL_Color* buffer;
+}RenderBuffer;
+
+#define SCALE_BUFLEN(width, height, scale_rate) ((width) * (height) * (scale_rate) * (scale_rate))
+
+
 static void on_draw(SDL_Renderer* render) {
   SDL_SetRenderDrawColor(render, 255, 255, 255, 255);
 
   SDL_RenderClear(render);
 
   SDL_SetRenderDrawColor(render, 0, 0, 0, 255);
-  
-  for (int i = 0; i < 100; ++i) {
-    for (int j = 0; j < 100; ++j) {
-      if (SDL_RenderDrawPoint(render, i, j) == -1) {
-        printf("Draw point failed\n");
-      }
-    }
-  }
+  SDL_RenderDrawLine(render, 0, 0, 35, 43);
 }
 
 static void update_fps(long frame_time, TTF_Font* font, SDL_Renderer* render) {
